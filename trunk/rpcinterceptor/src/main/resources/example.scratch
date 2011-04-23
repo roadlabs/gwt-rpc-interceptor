@@ -1,0 +1,8 @@
+  <inherits name="com.julio.gwt.rpcinterceptor.RpcInterceptor"/>
+  <set-configuration-property name="com.julio.interceptor.class" value="com.julio.myapp.client.MyPRoxy" />
+  <!-- com.julio.myapp.client.MyPRoxy should extend RpcServiceInterceptor -->
+ 
+  <generate-with
+		class="com.julio.gwt.rpcinterceptor.generator.RemoteInterfaceProxyGenerator">
+		<when-type-assignable class="com.google.gwt.user.client.rpc.RemoteService" />
+  </generate-with>
