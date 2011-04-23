@@ -35,7 +35,7 @@ public class RemoteInterfaceProxyGenerator extends com.google.gwt.user.rebind.rp
 
 		cacheContext(ctx);
 
-		TreeLogger loggerBranched = logger.branch(TreeLogger.INFO, "[*" + this.getClass().getSimpleName() + "*] Incremental Generator: Creating custom proxy for " + requestedClass, null);
+		TreeLogger loggerBranched = logger.branch(TreeLogger.DEBUG, "[*" + this.getClass().getSimpleName() + "*] Incremental Generator: Creating custom proxy for " + requestedClass, null);
 		return super.generateIncrementally(loggerBranched, ctx, requestedClass);
 	}
 
