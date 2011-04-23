@@ -92,10 +92,14 @@ public class RpcServiceInterceptor extends RemoteServiceProxy {
 		veto = vetoRequest(getServiceEntryPoint(), methodName, requestData);
 
 		if (veto) {
+
 			callback.onFailure(new RpcCallVetoException());
+			return null;
+
+		} else {
+			return super.doInvoke(responseReader, methodName, statsContext, requestData, callback);
 		}
 
-		return super.doInvoke(responseReader, methodName, statsContext, requestData, callback);
 
 	}
 
