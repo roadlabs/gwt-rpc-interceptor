@@ -3,10 +3,7 @@ package com.julio.gwt.rpcinterceptor.client;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.rpc.client.impl.RemoteException;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.SerializationException;
-import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.rpc.impl.RemoteServiceProxy;
 import com.google.gwt.user.client.rpc.impl.RequestCallbackAdapter.ResponseReader;
 import com.google.gwt.user.client.rpc.impl.RpcStatsContext;
@@ -34,21 +31,6 @@ public class RpcServiceInterceptor extends RemoteServiceProxy {
 
 
 	/**
-	 * Creates the stream reader.
-	 *
-	 * @param encoded the encoded
-	 * @return the serialization stream reader
-	 * @throws SerializationException the serialization exception
-	 * @throws RemoteException the remote exception
-	 * {@inheritDoc}
-	 */
-	@Override
-	public SerializationStreamReader createStreamReader(String encoded) throws SerializationException, RemoteException {
-		preprocessPayload(encoded);
-		return super.createStreamReader(encoded);
-	}
-
-	/**
 	 * Do create request callback.
 	 *
 	 * @param <T> the generic type
@@ -68,8 +50,9 @@ public class RpcServiceInterceptor extends RemoteServiceProxy {
 		RequestCallback wrapped = new RequestCallback() {
 			@Override
 			public void onResponseReceived(Request request, Response response) {
-				preprocessRawResponse(response);
-				doCreateRequestCallback.onResponseReceived(request, response);
+				if (preprocessRawResponse(response)) {
+					doCreateRequestCallback.onResponseReceived(request, response);
+				}
 			}
 			@Override
 			public void onError(Request request, Throwable exception) {
@@ -106,22 +89,14 @@ public class RpcServiceInterceptor extends RemoteServiceProxy {
 	// ---------------------------------------------------------------------
 	// ---------------------------------------------------------------------
 
-	/**
-	 * Preprocess payload.
-	 *
-	 * @param encoded the encoded
-	 */
-	protected void preprocessPayload(String encoded) {
-
-	}
 
 	/**
 	 * Preprocess raw response.
 	 *
 	 * @param response the response
 	 */
-	protected void preprocessRawResponse(Response response) {
-
+	protected boolean preprocessRawResponse(Response response) {
+		return true;
 	}
 
 	/**
