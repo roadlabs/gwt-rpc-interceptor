@@ -4,7 +4,7 @@
 
 	<inherits name='com.google.gwt.rpc.RPC' />
 	
-	<define-configuration-property name="com.julio.interceptor.class" is_multi_valued="false" />
+	<define-configuration-property name="com.goolecode.julio.interceptor.class" is_multi_valued="false" />
 
 	<source path='client' />
 
